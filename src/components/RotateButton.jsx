@@ -1,8 +1,15 @@
 function RotateButton() {
+  function handleRotateClick(e) {
+    e.preventDefault();
+    const body = document.body;
+    body.classList.toggle("rotate");
+  }
+
   return (
     <div className="rotation">
       <span className="rotate-btn">
         <svg
+          onClick={handleRotateClick}
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"
