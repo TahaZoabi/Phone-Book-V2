@@ -8,10 +8,11 @@ function Contact({ contact }) {
         alt="User Profile Picture"
         className="user-pic"
       />
-      <div className="status">
-        <div className="info"> </div>
+      <div className="info">
         <span className="name">{contact.name}</span>
-        <span className="description"></span>
+        <span className="description">{contact.phoneNumber}</span>
+      </div>
+      <div className="status">
         <div className="edit">
           <svg
             xmlns="http://www.w3.org/2000/svg"

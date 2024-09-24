@@ -4,10 +4,9 @@ import Contact from "./Contact.jsx";
 
 function ContactList() {
   const { initialState } = useContext(GlobalContext);
-  const contacts = [...initialState];
   return (
     <>
-      {contacts.length === 0 ? (
+      {initialState.length === 0 ? (
         <div id="empty-list">
           <h3>
             Your Contact List is Empty, <br />
@@ -16,9 +15,11 @@ function ContactList() {
         </div>
       ) : (
         <div className="phone-contact-list">
-          {contacts.map((contact) => {
-            return <Contact key={contact.PhoneNumber} contact={contact} />;
-          })}
+          {initialState
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map((contact) => {
+              return <Contact key={contact.phoneNumber} contact={contact} />;
+            })}
         </div>
       )}
     </>

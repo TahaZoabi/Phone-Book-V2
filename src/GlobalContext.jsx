@@ -2,28 +2,28 @@ import { createContext } from "react";
 // Initial State
 const initialState = [
   {
-    Name: "Emily Johnson",
-    PhoneNumber: "0543210987",
-    Address: "456 Oak Avenue, Anycity, USA",
-    Email: "emily.johnson@example.com",
+    name: "Emily Johnson",
+    phoneNumber: "0543210987",
+    address: "456 Oak Avenue, Anycity, USA",
+    email: "emily.johnson@example.com",
   },
   {
-    Name: "Michael Brown",
-    PhoneNumber: "0505551234",
-    Address: "789 Elm Street, Anystate, USA",
-    Email: "michael.brown@example.com",
+    name: "Michael Brown",
+    phoneNumber: "0505551234",
+    address: "789 Elm Street, Anystate, USA",
+    email: "michael.brown@example.com",
   },
   {
-    Name: "Sarah Davis",
-    PhoneNumber: "0524478714",
-    Address: "321 Pine Road, Anyvillage, USA",
-    Email: "sarah.davis@example.com",
+    name: "Sarah Davis",
+    phoneNumber: "0524478714",
+    address: "321 Pine Road, Anyvillage, USA",
+    email: "sarah.davis@example.com",
   },
   {
-    Name: "Christopher Wilson",
-    PhoneNumber: "0544825478",
-    Address: "654 Maple Lane, Anysuburb, USA",
-    Email: "christopher.wilson@example.com",
+    name: "Christopher Wilson",
+    phoneNumber: "0544825478",
+    address: "654 Maple Lane, Anysuburb, USA",
+    email: "christopher.wilson@example.com",
   },
 ];
 

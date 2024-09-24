@@ -1,6 +1,12 @@
 import AddButton from "./AddButton.jsx";
+import { useRef } from "react";
 
 function Input() {
+  const search = useRef();
+  function handleSearch(e) {
+    search.current = e.target.value;
+    console.log(search.current);
+  }
   return (
     <>
       <span className="title">List of Contacts</span>
@@ -26,6 +32,8 @@ function Input() {
           </button>
 
           <input
+            ref={search}
+            onChange={handleSearch}
             className="input"
             placeholder="Search Contacts..."
             required
