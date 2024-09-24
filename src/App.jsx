@@ -6,10 +6,11 @@ import DeleteAllButton from "./components/DeleteAllButton.jsx";
 import ModalForm from "./components/ModalForm.jsx";
 import Confirm from "./components/Confirm.jsx";
 import Footer from "./components/Footer.jsx";
+import { GlobalProvider } from "./GlobalContext.jsx";
 
 function App() {
   return (
-    <>
+    <GlobalProvider>
       <main>
         <section className="container">
           <Header />
@@ -22,7 +23,7 @@ function App() {
           <Footer />
         </section>
       </main>
-    </>
+    </GlobalProvider>
   );
 }
 
