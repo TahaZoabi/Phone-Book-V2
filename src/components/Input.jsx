@@ -1,17 +1,14 @@
 import AddButton from "./AddButton.jsx";
-import { useRef } from "react";
 
-function Input() {
-  const search = useRef();
-  function handleSearch(e) {
-    search.current = e.target.value;
-    console.log(search.current);
-  }
+function Input({ searchValue, handleSearch }) {
+  const handleReset = () => {
+    handleSearch("");
+  };
   return (
     <>
       <span className="title">List of Contacts</span>
       <div className="contact-container">
-        <form className="search-form">
+        <form className="search-form" onSubmit={(e) => e.preventDefault()}>
           <button type="button" aria-label="Search">
             <svg
               width="17"
@@ -32,8 +29,8 @@ function Input() {
           </button>
 
           <input
-            ref={search}
-            onChange={handleSearch}
+            value={searchValue}
+            onChange={(e) => handleSearch(e.target.value)}
             className="input"
             placeholder="Search Contacts..."
             required
@@ -41,7 +38,7 @@ function Input() {
             id="search-input"
           />
 
-          <button type="reset" className="reset">
+          <button type="reset" className="reset" onClick={handleReset}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
