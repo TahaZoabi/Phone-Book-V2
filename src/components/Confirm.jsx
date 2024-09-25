@@ -3,14 +3,30 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function Confirm() {
-  const { isConfirmOpen, setIsConfirmOpen, setContactsList } =
-    useContext(GlobalContext);
-  function handleCancelButton() {
+  const {
+    isConfirmOpen,
+    setIsConfirmOpen,
+    setContactsList,
+    deleteState,
+    setDeleteState,
+  } = useContext(GlobalContext);
+  function handleCancelClick() {
     setIsConfirmOpen(false);
   }
-  function handleConfirmClick() {
-    setContactsList([]);
+  function handleConfirmClick(index) {
+    if (deleteState === "individual") {
+      console.log(index);
+      setContactsList((contactList) => [...contactList].splice(index, 1));
+      resetActions();
+    } else if (deleteState === "all") {
+      setContactsList([]);
+      resetActions();
+    }
+  }
+
+  function resetActions() {
     setIsConfirmOpen(false);
+    setDeleteState(null);
   }
 
   return (
@@ -27,7 +43,7 @@ function Confirm() {
         </p>
         <div className="actions">
           <button
-            onClick={handleCancelButton}
+            onClick={handleCancelClick}
             id="confirm-cancelBtn"
             type="button"
             className="cancel-btn"

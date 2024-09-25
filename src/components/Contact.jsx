@@ -1,6 +1,15 @@
 import userProfilePic from "../assets/user.png";
+import { useContext } from "react";
+import { GlobalContext } from "../GlobalContext.jsx";
 
 function Contact({ contact }) {
+  const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
+
+  function handleDeleteClick() {
+    setIsConfirmOpen(true);
+    setDeleteState("individual");
+  }
+
   return (
     <div className="user-card">
       <img
@@ -32,6 +41,7 @@ function Contact({ contact }) {
         </div>
         <div className="delete">
           <svg
+            onClick={handleDeleteClick}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"

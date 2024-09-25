@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function DeleteAllButton() {
-  const { setIsConfirmOpen } = useContext(GlobalContext);
+  const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
   function handleDeleteAll() {
     setIsConfirmOpen(true);
+    setDeleteState("all");
   }
   return (
     <button id="delete-all" className="pushable" type="button">
