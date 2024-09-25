@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 
 // Initial State
 const initialState = [
@@ -33,7 +33,10 @@ export const GlobalContext = createContext(initialState);
 
 // Provider Component
 export const GlobalProvider = ({ children }) => {
+  const [contactsList, setContactsList] = useState(initialState);
   const [isOpen, setIsOpen] = useState(false);
+  const nameRef = useRef("");
+  const phoneNumberRef = useRef("");
 
   return (
     <GlobalContext.Provider
@@ -41,6 +44,10 @@ export const GlobalProvider = ({ children }) => {
         initialState,
         isOpen,
         setIsOpen,
+        nameRef,
+        phoneNumberRef,
+        contactsList,
+        setContactsList,
       }}
     >
       {children}

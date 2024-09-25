@@ -3,10 +3,10 @@ import { GlobalContext } from "../GlobalContext.jsx";
 import Contact from "./Contact.jsx";
 
 function ContactList({ searchValue }) {
-  const { initialState } = useContext(GlobalContext);
+  const { contactsList } = useContext(GlobalContext);
 
   // Sort the initial state contacts
-  const sortedContacts = initialState.sort((a, b) =>
+  const sortedContacts = contactsList.sort((a, b) =>
     a.name.localeCompare(b.name),
   );
 
@@ -18,7 +18,7 @@ function ContactList({ searchValue }) {
 
   return (
     <>
-      {initialState?.length === 0 ? (
+      {contactsList?.length === 0 ? (
         <div id="empty-list">
           <h3>
             Your Contact List is Empty, <br />
@@ -28,7 +28,7 @@ function ContactList({ searchValue }) {
       ) : (
         <div className="phone-contact-list">
           {filteredContacts.map((contact) => (
-            <Contact key={contact.phoneNumber} contact={contact} />
+            <Contact key={contact.name} contact={contact} />
           ))}
         </div>
       )}

@@ -3,10 +3,36 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function ModalForm() {
-  const { isOpen, setIsOpen } = useContext(GlobalContext);
+  const {
+    isOpen,
+    setIsOpen,
+    nameRef,
+    phoneNumberRef,
+    setContactsList,
+    contactsList,
+  } = useContext(GlobalContext);
   function handleCancelButton() {
     setIsOpen(false);
   }
+
+  function handleNameChange(e) {
+    nameRef.current = e.target.value;
+  }
+
+  function handlePhoneNUmberChange(e) {
+    phoneNumberRef.current = e.target.value;
+  }
+  function handleConfirmButton() {
+    setContactsList([
+      ...contactsList,
+      {
+        name: nameRef.current,
+        phoneNumber: phoneNumberRef.current,
+      },
+    ]);
+    setIsOpen(false);
+  }
+
   return (
     <section
       className={`contact-modal ${isOpen ? "display-flex" : "display-none"}`}
@@ -22,6 +48,8 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
+              ref={nameRef}
+              onChange={handleNameChange}
               type="text"
               id="name"
               name="name"
@@ -35,6 +63,8 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
+              ref={phoneNumberRef}
+              onChange={handlePhoneNUmberChange}
               type="tel"
               id="phone"
               name="phone"
@@ -74,7 +104,12 @@ function ModalForm() {
             >
               Cancel
             </button>
-            <button id="saveBtn" type="button" className="read confirmBtn">
+            <button
+              id="saveBtn"
+              type="button"
+              className="read confirmBtn"
+              onClick={handleConfirmButton}
+            >
               Confirm
             </button>
           </div>
