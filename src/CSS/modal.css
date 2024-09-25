@@ -20,8 +20,14 @@ body {
 /* === Modal Styling === */
 
 /* Styling for the contact modal */
-.contact-modal {
+.display-none {
     display: none;
+}
+
+.display-flex{
+    display: flex;
+}
+.contact-modal {
     position: fixed;
     top: 0;
     left: 0;

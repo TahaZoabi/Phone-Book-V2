@@ -1,4 +1,5 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
+
 // Initial State
 const initialState = [
   {
@@ -27,18 +28,21 @@ const initialState = [
   },
 ];
 
-// value
-const valuesList = {
-  initialState,
-};
-
 // Create Context
-export const GlobalContext = createContext(valuesList);
+export const GlobalContext = createContext(initialState);
 
 // Provider Component
 export const GlobalProvider = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <GlobalContext.Provider value={valuesList}>
+    <GlobalContext.Provider
+      value={{
+        initialState,
+        isOpen,
+        setIsOpen,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );

@@ -1,8 +1,16 @@
 import "../CSS/modal.css";
+import { useContext } from "react";
+import { GlobalContext } from "../GlobalContext.jsx";
 
 function ModalForm() {
+  const { isOpen, setIsOpen } = useContext(GlobalContext);
+  function handleCancelButton() {
+    setIsOpen(false);
+  }
   return (
-    <section className="contact-modal">
+    <section
+      className={`contact-modal ${isOpen ? "display-flex" : "display-none"}`}
+    >
       <div id="form-container">
         <div className="header">
           <p className="alert">New Contact</p>
@@ -59,7 +67,11 @@ function ModalForm() {
           </div>
 
           <div className="actions">
-            <button type="button" className="mark-as-read cancelBtn">
+            <button
+              type="button"
+              className="mark-as-read cancelBtn"
+              onClick={handleCancelButton}
+            >
               Cancel
             </button>
             <button id="saveBtn" type="button" className="read confirmBtn">

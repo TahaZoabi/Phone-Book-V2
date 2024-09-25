@@ -1,8 +1,17 @@
+import { useContext } from "react";
+import { GlobalContext } from "../GlobalContext.jsx";
+
 function AddButton() {
+  const { setIsOpen } = useContext(GlobalContext);
+
+  function handleClick() {
+    setIsOpen(true);
+  }
+
   return (
     <button id="showFormBtn" className="pushable" type="button">
       <span className="edge"></span>
-      <span className="front">
+      <span className="front" onClick={handleClick}>
         New
         <svg
           xmlns="http://www.w3.org/2000/svg"
