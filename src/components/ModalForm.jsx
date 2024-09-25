@@ -4,38 +4,41 @@ import { GlobalContext } from "../GlobalContext.jsx";
 
 function ModalForm() {
   const {
-    isOpen,
-    setIsOpen,
+    isFormOpen,
+    setIsFormOpen,
     nameRef,
     phoneNumberRef,
     setContactsList,
     contactsList,
   } = useContext(GlobalContext);
   function handleCancelButton() {
-    setIsOpen(false);
+    setIsFormOpen(false);
   }
 
   function handleNameChange(e) {
     nameRef.current = e.target.value;
   }
 
-  function handlePhoneNUmberChange(e) {
+  function handlePhoneNumberChange(e) {
     phoneNumberRef.current = e.target.value;
   }
+
   function handleConfirmButton() {
     setContactsList([
       ...contactsList,
       {
         name: nameRef.current,
-        phoneNumber: phoneNumberRef.current,
+        phoneNumber: "",
+        address: "",
+        email: "",
       },
     ]);
-    setIsOpen(false);
+    setIsFormOpen(false);
   }
 
   return (
     <section
-      className={`contact-modal ${isOpen ? "display-flex" : "display-none"}`}
+      className={`contact-modal ${isFormOpen ? "display-flex" : "display-none"}`}
     >
       <div id="form-container">
         <div className="header">
@@ -64,7 +67,7 @@ function ModalForm() {
             <div className="error"></div>
             <input
               ref={phoneNumberRef}
-              onChange={handlePhoneNUmberChange}
+              onChange={handlePhoneNumberChange}
               type="tel"
               id="phone"
               name="phone"

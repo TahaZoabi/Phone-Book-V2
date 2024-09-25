@@ -4,7 +4,6 @@ import Contact from "./Contact.jsx";
 
 function ContactList({ searchValue }) {
   const { contactsList } = useContext(GlobalContext);
-
   // Sort the initial state contacts
   const sortedContacts = contactsList.sort((a, b) =>
     a.name.localeCompare(b.name),

@@ -20,8 +20,16 @@ body {
 /* === Alert Styles === */
 
 /* Styles for the confirmation popup */
-.confirm-popup {
+.display-none {
     display: none;
+}
+
+.display-flex{
+    display: flex;
+}
+
+.confirm-popup {
+
     position: fixed;
     top: 0;
     left: 0;

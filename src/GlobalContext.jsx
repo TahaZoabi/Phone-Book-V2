@@ -34,7 +34,8 @@ export const GlobalContext = createContext(initialState);
 // Provider Component
 export const GlobalProvider = ({ children }) => {
   const [contactsList, setContactsList] = useState(initialState);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const nameRef = useRef("");
   const phoneNumberRef = useRef("");
 
@@ -42,12 +43,14 @@ export const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         initialState,
-        isOpen,
-        setIsOpen,
+        isFormOpen,
+        setIsFormOpen,
         nameRef,
         phoneNumberRef,
         contactsList,
         setContactsList,
+        isConfirmOpen,
+        setIsConfirmOpen,
       }}
     >
       {children}

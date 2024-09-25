@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function AddButton() {
-  const { setIsOpen } = useContext(GlobalContext);
+  const { setIsFormOpen } = useContext(GlobalContext);
 
   function handleClick() {
-    setIsOpen(true);
+    setIsFormOpen(true);
   }
 
   return (
