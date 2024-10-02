@@ -14,8 +14,20 @@ function Contact({ contact, index }) {
     });
   }
 
+  function handleMouseEnter(e) {
+    e.target.classList.add("hover");
+  }
+
+  function handleMouseLeave(e) {
+    e.target.classList.remove("hover");
+  }
+
   return (
-    <div className="user-card">
+    <div
+      className="user-card"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <img
         src={userProfilePic}
         alt="User Profile Picture"
