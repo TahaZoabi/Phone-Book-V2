@@ -161,7 +161,7 @@ h3 {
 /* Phone contact list container */
 .phone-contact-list {
     width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+
     border-radius: 0.5rem;
     overflow: hidden;
 }
@@ -304,7 +304,20 @@ h3 {
 
 /* Styles for empty list message */
 #empty-list {
-    display: none;
+    display: flex;
+    padding-bottom: 1rem;
+    position: relative;
+}
+#empty-list::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-left: -60px;
+    margin-right: -60px;
 }
 
 #empty-list h3 {
