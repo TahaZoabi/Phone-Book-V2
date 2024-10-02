@@ -36,7 +36,7 @@ export const GlobalProvider = ({ children }) => {
   const [contactsList, setContactsList] = useState(initialState);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [deleteState, setDeleteState] = useState(null);
+  const [deleteState, setDeleteState] = useState("");
   const nameRef = useRef("");
   const phoneNumberRef = useRef("");
 
