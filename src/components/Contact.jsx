@@ -2,12 +2,15 @@ import userProfilePic from "../assets/user.png";
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
-function Contact({ contact }) {
+function Contact({ contact, index }) {
   const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
 
   function handleDeleteClick() {
     setIsConfirmOpen(true);
-    setDeleteState("individual");
+    setDeleteState({
+      type: "individual",
+      index,
+    });
   }
 
   return (

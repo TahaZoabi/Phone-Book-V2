@@ -13,12 +13,13 @@ function Confirm() {
   function handleCancelClick() {
     setIsConfirmOpen(false);
   }
-  function handleConfirmClick(index) {
-    if (deleteState === "individual") {
-      console.log(index);
-      setContactsList((contactList) => [...contactList].splice(index, 1));
+  function handleConfirmClick() {
+    if (deleteState.type === "individual") {
+      setContactsList((contactList) =>
+        contactList.filter((contact, i) => i !== deleteState.index),
+      );
       resetActions();
-    } else if (deleteState === "all") {
+    } else if (deleteState.type === "all") {
       setContactsList([]);
       resetActions();
     }

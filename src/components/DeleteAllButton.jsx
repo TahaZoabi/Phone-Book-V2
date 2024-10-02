@@ -5,7 +5,9 @@ function DeleteAllButton() {
   const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
   function handleDeleteAll() {
     setIsConfirmOpen(true);
-    setDeleteState("all");
+    setDeleteState({
+      type: "all",
+    });
   }
   return (
     <button id="delete-all" className="pushable" type="button">
