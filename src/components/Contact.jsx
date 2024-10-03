@@ -7,7 +7,7 @@ function Contact({ contact, index }) {
     setIsConfirmOpen,
     setDeleteState,
     setIsFormOpen,
-    formData,
+    setFormData,
     setIsEditing,
   } = useContext(GlobalContext);
 
@@ -21,8 +21,15 @@ function Contact({ contact, index }) {
   }
 
   function handleEditClick() {
-    setIsEditing(true);
+    setIsEditing({ mode: true, index });
     setIsFormOpen(true);
+
+    setFormData({
+      name: contact.name,
+      phoneNumber: contact.phoneNumber,
+      address: contact.address,
+      email: contact.email,
+    });
   }
 
   function handleMouseEnter(e) {

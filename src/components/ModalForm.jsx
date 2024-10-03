@@ -10,35 +10,38 @@ function ModalForm() {
     setContactsList,
     isEditing,
     setIsEditing,
+    setFormData,
   } = useContext(GlobalContext);
+
   function handleCancelButton() {
     setIsFormOpen(false);
-    setIsEditing(false);
+    setIsEditing({ mode: false, index: null }); // Reset editing state
+    setFormData({ name: "", phoneNumber: "", address: "", email: "" }); // Reset form data
   }
 
   function handleDataChange(e) {
     const { name, value } = e.target;
-    formData.current[name] = value;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   }
 
   function handleConfirmButton() {
-    setContactsList((prevContactsList) => {
-      return [
-        ...prevContactsList,
-        {
-          name: formData.current.name,
-          phoneNumber: formData.current.phoneNumber,
-          address: formData.current.address,
-          email: formData.current.email,
-        },
-      ];
-    });
-    setIsFormOpen(false);
+    setContactsList((prevContactsList) => [...prevContactsList, formData]);
+    handleCancelButton(); // Close the form after adding
   }
 
   function handleSaveButton() {
-    console.log("saved");
-    setIsEditing(false);
+    const { index } = isEditing; // Get the index of the contact to edit
+
+    setContactsList((prevContactsList) => {
+      const updatedList = [...prevContactsList];
+      updatedList[index] = formData; // Update with the new formData
+      return updatedList; // Return the updated list
+    });
+
+    setIsEditing({ mode: false });
     setIsFormOpen(false);
   }
 
@@ -48,7 +51,9 @@ function ModalForm() {
     >
       <div id="form-container">
         <div className="header">
-          <p className="alert">{isEditing ? "Edit Contact" : "New Contact"}</p>
+          <p className="alert">
+            {isEditing.mode ? "Edit Contact" : "New Contact"}
+          </p>
         </div>
         <form id="contactForm">
           <div className="form-label">
@@ -57,7 +62,7 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
-              ref={formData.name}
+              value={formData.name}
               onChange={handleDataChange}
               type="text"
               id="name"
@@ -72,7 +77,7 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
-              ref={formData.phoneNumber}
+              value={formData.phoneNumber}
               onChange={handleDataChange}
               type="tel"
               id="phone"
@@ -88,7 +93,7 @@ function ModalForm() {
             <div className="error"></div>
             <input
               onChange={handleDataChange}
-              ref={formData.email}
+              value={formData.email}
               type="email"
               id="email"
               name="email"
@@ -101,7 +106,7 @@ function ModalForm() {
             <div className="error"></div>
             <input
               onChange={handleDataChange}
-              ref={formData.address}
+              value={formData.address}
               type="text"
               className="new-contact-input"
               placeholder="123 Main Street, Anytown, USA"
@@ -122,9 +127,9 @@ function ModalForm() {
               id="saveBtn"
               type="button"
               className="read confirmBtn"
-              onClick={isEditing ? handleSaveButton : handleConfirmButton}
+              onClick={isEditing.mode ? handleSaveButton : handleConfirmButton}
             >
-              {isEditing ? "Save" : "Confirm"}
+              {isEditing.mode ? "Save" : "Confirm"}
             </button>
           </div>
         </form>

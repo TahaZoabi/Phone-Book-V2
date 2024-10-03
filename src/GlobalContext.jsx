@@ -1,4 +1,4 @@
-import { createContext, useRef, useState } from "react";
+import { createContext, useState } from "react";
 
 // Initial State
 const initialState = [
@@ -36,9 +36,12 @@ export const GlobalProvider = ({ children }) => {
   const [contactsList, setContactsList] = useState(initialState);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState({
+    mode: false,
+    index: null,
+  });
   const [deleteState, setDeleteState] = useState("");
-  const formData = useRef({
+  const [formData, setFormData] = useState({
     name: "",
     phoneNumber: "",
     address: "",
@@ -60,6 +63,7 @@ export const GlobalProvider = ({ children }) => {
         setDeleteState,
         isEditing,
         setIsEditing,
+        setFormData,
       }}
     >
       {children}
