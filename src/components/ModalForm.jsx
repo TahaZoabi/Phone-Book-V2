@@ -3,10 +3,17 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function ModalForm() {
-  const { isFormOpen, setIsFormOpen, formData, setContactsList } =
-    useContext(GlobalContext);
+  const {
+    isFormOpen,
+    setIsFormOpen,
+    formData,
+    setContactsList,
+    isEditing,
+    setIsEditing,
+  } = useContext(GlobalContext);
   function handleCancelButton() {
     setIsFormOpen(false);
+    setIsEditing(false);
   }
 
   function handleDataChange(e) {
@@ -29,13 +36,19 @@ function ModalForm() {
     setIsFormOpen(false);
   }
 
+  function handleSaveButton() {
+    console.log("saved");
+    setIsEditing(false);
+    setIsFormOpen(false);
+  }
+
   return (
     <section
       className={`contact-modal ${isFormOpen ? "display-flex" : "display-none"}`}
     >
       <div id="form-container">
         <div className="header">
-          <p className="alert">New Contact</p>
+          <p className="alert">{isEditing ? "Edit Contact" : "New Contact"}</p>
         </div>
         <form id="contactForm">
           <div className="form-label">
@@ -109,9 +122,9 @@ function ModalForm() {
               id="saveBtn"
               type="button"
               className="read confirmBtn"
-              onClick={handleConfirmButton}
+              onClick={isEditing ? handleSaveButton : handleConfirmButton}
             >
-              Confirm
+              {isEditing ? "Save" : "Confirm"}
             </button>
           </div>
         </form>

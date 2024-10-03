@@ -36,6 +36,7 @@ export const GlobalProvider = ({ children }) => {
   const [contactsList, setContactsList] = useState(initialState);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [deleteState, setDeleteState] = useState("");
   const formData = useRef({
     name: "",
@@ -57,6 +58,8 @@ export const GlobalProvider = ({ children }) => {
         setIsConfirmOpen,
         deleteState,
         setDeleteState,
+        isEditing,
+        setIsEditing,
       }}
     >
       {children}

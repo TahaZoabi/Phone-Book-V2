@@ -3,7 +3,13 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function Contact({ contact, index }) {
-  const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
+  const {
+    setIsConfirmOpen,
+    setDeleteState,
+    setIsFormOpen,
+    formData,
+    setIsEditing,
+  } = useContext(GlobalContext);
 
   function handleDeleteClick() {
     setIsConfirmOpen(true);
@@ -12,6 +18,11 @@ function Contact({ contact, index }) {
       index,
       name: contact.name,
     });
+  }
+
+  function handleEditClick() {
+    setIsEditing(true);
+    setIsFormOpen(true);
   }
 
   return (
@@ -28,6 +39,7 @@ function Contact({ contact, index }) {
       <div className="status">
         <div className="edit">
           <svg
+            onClick={handleEditClick}
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
