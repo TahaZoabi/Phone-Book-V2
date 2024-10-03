@@ -3,36 +3,29 @@ import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
 function ModalForm() {
-  const {
-    isFormOpen,
-    setIsFormOpen,
-    nameRef,
-    phoneNumberRef,
-    setContactsList,
-    contactsList,
-  } = useContext(GlobalContext);
+  const { isFormOpen, setIsFormOpen, formData, setContactsList } =
+    useContext(GlobalContext);
   function handleCancelButton() {
     setIsFormOpen(false);
   }
 
-  function handleNameChange(e) {
-    nameRef.current = e.target.value;
-  }
-
-  function handlePhoneNumberChange(e) {
-    phoneNumberRef.current = e.target.value;
+  function handleDataChange(e) {
+    const { name, value } = e.target;
+    formData.current[name] = value;
   }
 
   function handleConfirmButton() {
-    setContactsList([
-      ...contactsList,
-      {
-        name: nameRef.current,
-        phoneNumber: "",
-        address: "",
-        email: "",
-      },
-    ]);
+    setContactsList((prevContactsList) => {
+      return [
+        ...prevContactsList,
+        {
+          name: formData.current.name,
+          phoneNumber: formData.current.phoneNumber,
+          address: formData.current.address,
+          email: formData.current.email,
+        },
+      ];
+    });
     setIsFormOpen(false);
   }
 
@@ -51,8 +44,8 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
-              ref={nameRef}
-              onChange={handleNameChange}
+              ref={formData.name}
+              onChange={handleDataChange}
               type="text"
               id="name"
               name="name"
@@ -66,11 +59,11 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
-              ref={phoneNumberRef}
-              onChange={handlePhoneNumberChange}
+              ref={formData.phoneNumber}
+              onChange={handleDataChange}
               type="tel"
               id="phone"
-              name="phone"
+              name="phoneNumber"
               className="new-contact-input"
               placeholder="0549876543"
             />
@@ -81,6 +74,8 @@ function ModalForm() {
             </label>
             <div className="error"></div>
             <input
+              onChange={handleDataChange}
+              ref={formData.email}
               type="email"
               id="email"
               name="email"
@@ -92,10 +87,13 @@ function ModalForm() {
             <label className="label-type">Address</label>
             <div className="error"></div>
             <input
+              onChange={handleDataChange}
+              ref={formData.address}
               type="text"
               className="new-contact-input"
               placeholder="123 Main Street, Anytown, USA"
               id="address"
+              name="address"
             />
           </div>
 

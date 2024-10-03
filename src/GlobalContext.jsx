@@ -37,8 +37,12 @@ export const GlobalProvider = ({ children }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteState, setDeleteState] = useState(null);
-  const nameRef = useRef("");
-  const phoneNumberRef = useRef("");
+  const formData = useRef({
+    name: "",
+    phoneNumber: "",
+    address: "",
+    email: "",
+  });
 
   return (
     <GlobalContext.Provider
@@ -46,8 +50,7 @@ export const GlobalProvider = ({ children }) => {
         initialState,
         isFormOpen,
         setIsFormOpen,
-        nameRef,
-        phoneNumberRef,
+        formData,
         contactsList,
         setContactsList,
         isConfirmOpen,
