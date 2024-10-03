@@ -10,6 +10,7 @@ function Contact({ contact, index }) {
     setDeleteState({
       type: "individual",
       index,
+      name: contact.name,
     });
   }
 

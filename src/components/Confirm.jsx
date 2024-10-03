@@ -27,7 +27,7 @@ function Confirm() {
 
   function resetActions() {
     setIsConfirmOpen(false);
-    setDeleteState(null);
+    setDeleteState("");
   }
 
   return (
@@ -40,7 +40,11 @@ function Confirm() {
           <p className="alert-Warning">Confirmation Required</p>
         </div>
         <p id="confirm-text" className="message">
-          Do you want to proceed with the changes?
+          Are you sure you want to delete
+          {deleteState.type === "individual"
+            ? " " + deleteState.name
+            : " all contacts"}
+          ?
         </p>
         <div className="actions">
           <button
