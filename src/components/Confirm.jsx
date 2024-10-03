@@ -10,7 +10,6 @@ function Confirm() {
     deleteState,
     setDeleteState,
   } = useContext(GlobalContext);
-
   function handleCancelClick() {
     setIsConfirmOpen(false);
   }
@@ -28,9 +27,7 @@ function Confirm() {
 
   function resetActions() {
     setIsConfirmOpen(false);
-    setDeleteState({
-      type: "",
-    });
+    setDeleteState("");
   }
 
   return (
