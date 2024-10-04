@@ -16,7 +16,7 @@ function Confirm() {
   function handleConfirmClick() {
     if (deleteState.type === "individual") {
       setContactsList((contactList) =>
-        contactList.filter((contact, i) => i !== deleteState.index),
+        contactList.filter((contact) => contact.id !== deleteState.id),
       );
       resetActions();
     } else if (deleteState.type === "all") {

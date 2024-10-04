@@ -26,8 +26,8 @@ function ContactList({ searchValue }) {
         </div>
       ) : (
         <div className="phone-contact-list">
-          {filteredContacts.map((contact, index) => (
-            <Contact key={contact.name} contact={contact} index={index} />
+          {filteredContacts.map((contact) => (
+            <Contact key={contact.name} contact={contact} />
           ))}
         </div>
       )}

@@ -2,7 +2,7 @@ import userProfilePic from "../assets/user.png";
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
 
-function Contact({ contact, index }) {
+function Contact({ contact }) {
   const {
     setIsConfirmOpen,
     setDeleteState,
@@ -15,13 +15,13 @@ function Contact({ contact, index }) {
     setIsConfirmOpen(true);
     setDeleteState({
       type: "individual",
-      index,
+      id: contact.id,
       name: contact.name,
     });
   }
 
   function handleEditClick() {
-    setIsEditing({ mode: true, index });
+    setIsEditing({ mode: true, id: contact.id });
     setIsFormOpen(true);
 
     setFormData({

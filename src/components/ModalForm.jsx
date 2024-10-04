@@ -32,6 +32,7 @@ function ModalForm() {
   }
 
   function handleConfirmButton() {
+    formData.id = contactsList.length + 1;
     if (!validateInputs()) return; // Validate before proceeding
     setContactsList((prevContactsList) => [...prevContactsList, formData]);
     handleCancelButton(); // Close the form after adding
@@ -40,28 +41,25 @@ function ModalForm() {
   function handleSaveButton() {
     if (!validateInputs()) return; // Validate before proceeding
 
-    const { index } = isEditing;
+    const { id } = isEditing;
 
     setContactsList((prevContactsList) => {
       const updatedList = [...prevContactsList];
-      updatedList[index] = formData; // Update with the new formData
+      const index = updatedList.findIndex((c) => c.id === id); // Find the index directly
+
+      if (index !== -1) {
+        updatedList[index] = { ...formData, id };
+      }
       return updatedList; // Return the updated list
     });
 
-    setIsEditing({ mode: false });
+    setIsEditing({ mode: false, id: null });
     setIsFormOpen(false);
   }
 
   function validateInputs() {
     const newErrors = {};
 
-    function checkNameExists() {
-      contactsList.map((data) => {
-        if (data.name.toLowerCase() === formData.name.toLowerCase()) {
-          newErrors.name = "Contact Name already exists";
-        }
-      });
-    }
     if (!formData.name.trim()) {
       newErrors.name = "Contact name is required";
     } else if (formData.name.trim().length < 3) {
@@ -79,7 +77,6 @@ function ModalForm() {
       newErrors.email = "Invalid email format";
     }
 
-    checkNameExists();
     setErrors(newErrors); // Update errors state
     return Object.keys(newErrors).length === 0; // Return true if no errors
   }
