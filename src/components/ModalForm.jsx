@@ -12,6 +12,7 @@ function ModalForm() {
     isEditing,
     setIsEditing,
     setFormData,
+    contactsList,
   } = useContext(GlobalContext);
 
   function handleCancelButton() {
@@ -53,8 +54,18 @@ function ModalForm() {
 
   function validateInputs() {
     const newErrors = {};
-    if (!formData.name) {
+
+    function checkNameExists() {
+      contactsList.map((data) => {
+        if (data.name.toLowerCase() === formData.name.toLowerCase()) {
+          newErrors.name = "Contact Name already exists";
+        }
+      });
+    }
+    if (!formData.name.trim()) {
       newErrors.name = "Contact name is required";
+    } else if (formData.name.trim().length < 3) {
+      newErrors.name = "Contact name must be 3 letters at least";
     }
     if (!formData.phoneNumber) {
       newErrors.phoneNumber = "Contact phone number is required";
@@ -68,6 +79,7 @@ function ModalForm() {
       newErrors.email = "Invalid email format";
     }
 
+    checkNameExists();
     setErrors(newErrors); // Update errors state
     return Object.keys(newErrors).length === 0; // Return true if no errors
   }
