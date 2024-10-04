@@ -50,6 +50,7 @@ function ModalForm() {
       if (index !== -1) {
         updatedList[index] = { ...formData, id };
       }
+      formData.id = id;
       return updatedList; // Return the updated list
     });
 
