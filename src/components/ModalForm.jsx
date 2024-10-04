@@ -1,8 +1,10 @@
 import "../CSS/modal.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
+import ErrorDisplay from "./ErrorDisplay.jsx";
 
 function ModalForm() {
+  const [errors, setErrors] = useState({});
   const {
     isFormOpen,
     setIsFormOpen,
@@ -17,6 +19,7 @@ function ModalForm() {
     setIsFormOpen(false);
     setIsEditing({ mode: false, index: null }); // Reset editing state
     setFormData({ name: "", phoneNumber: "", address: "", email: "" }); // Reset form data
+    setErrors({}); // Reset errors
   }
 
   function handleDataChange(e) {
@@ -25,15 +28,19 @@ function ModalForm() {
       ...prevData,
       [name]: value,
     }));
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear specific error on input
   }
 
   function handleConfirmButton() {
+    if (!validateInputs()) return; // Validate before proceeding
     setContactsList((prevContactsList) => [...prevContactsList, formData]);
     handleCancelButton(); // Close the form after adding
   }
 
   function handleSaveButton() {
-    const { index } = isEditing; // Get the index of the contact to edit
+    if (!validateInputs()) return; // Validate before proceeding
+
+    const { index } = isEditing;
 
     setContactsList((prevContactsList) => {
       const updatedList = [...prevContactsList];
@@ -43,6 +50,27 @@ function ModalForm() {
 
     setIsEditing({ mode: false });
     setIsFormOpen(false);
+  }
+
+  function validateInputs() {
+    const newErrors = {};
+    if (!formData.name) {
+      newErrors.name = "Contact name is required";
+    }
+    if (!formData.phoneNumber) {
+      newErrors.phoneNumber = "Contact phone number is required";
+    } else if (!/^\d+$/.test(formData.phoneNumber)) {
+      newErrors.phoneNumber = "Phone number should only contain digits";
+    } else if (formData.phoneNumber.length !== 10) {
+      newErrors.phoneNumber = "Phone number must be 10 digits";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    setErrors(newErrors); // Update errors state
+    return Object.keys(newErrors).length === 0; // Return true if no errors
   }
 
   return (
@@ -56,65 +84,33 @@ function ModalForm() {
           </p>
         </div>
         <form id="contactForm">
-          <div className="form-label">
-            <label className="label-type" htmlFor="name">
-              Name
-            </label>
-            <div className="error"></div>
-            <input
-              value={formData.name}
-              onChange={handleDataChange}
-              type="text"
-              id="name"
-              name="name"
-              className="new-contact-input"
-              placeholder="John Smith"
-            />
-          </div>
-          <div className="form-property">
-            <label className="label-type" htmlFor="phone">
-              Phone Number
-            </label>
-            <div className="error"></div>
-            <input
-              value={formData.phoneNumber}
-              onChange={handleDataChange}
-              type="tel"
-              id="phone"
-              name="phoneNumber"
-              className="new-contact-input"
-              placeholder="0549876543"
-            />
-          </div>
-          <div className="form-property">
-            <label className="label-type" htmlFor="email">
-              Email
-            </label>
-            <div className="error"></div>
-            <input
-              onChange={handleDataChange}
-              value={formData.email}
-              type="email"
-              id="email"
-              name="email"
-              className="new-contact-input"
-              placeholder="john.smith@example.com"
-            />
-          </div>
-          <div className="form-property">
-            <label className="label-type">Address</label>
-            <div className="error"></div>
-            <input
-              onChange={handleDataChange}
-              value={formData.address}
-              type="text"
-              className="new-contact-input"
-              placeholder="123 Main Street, Anytown, USA"
-              id="address"
-              name="address"
-            />
-          </div>
-
+          {["name", "phoneNumber", "email", "address"].map((field) => (
+            <div className="form-property" key={field}>
+              <label className="label-type" htmlFor={field}>
+                {field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              {errors[field] && <div className="error">{errors[field]}</div>}
+              {/* Conditionally render error */}
+              <input
+                value={formData[field]}
+                onChange={handleDataChange}
+                type={field === "phoneNumber" ? "tel" : "text"}
+                id={field}
+                name={field}
+                className="new-contact-input"
+                placeholder={
+                  field === "name"
+                    ? "John Smith"
+                    : field === "phoneNumber"
+                      ? "0549876543"
+                      : field === "email"
+                        ? "john.smith@example.com"
+                        : "123 Main Street, Anytown, USA"
+                }
+              />
+            </div>
+          ))}
+          <ErrorDisplay setErrors={setErrors} />
           <div className="actions">
             <button
               type="button"
@@ -124,7 +120,6 @@ function ModalForm() {
               Cancel
             </button>
             <button
-              id="saveBtn"
               type="button"
               className="read confirmBtn"
               onClick={isEditing.mode ? handleSaveButton : handleConfirmButton}
