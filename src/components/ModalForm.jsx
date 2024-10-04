@@ -1,7 +1,6 @@
 import "../CSS/modal.css";
 import { useContext, useState } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
-import ErrorDisplay from "./ErrorDisplay.jsx";
 
 function ModalForm() {
   const [errors, setErrors] = useState({});
@@ -110,7 +109,6 @@ function ModalForm() {
               />
             </div>
           ))}
-          <ErrorDisplay setErrors={setErrors} />
           <div className="actions">
             <button
               type="button"
