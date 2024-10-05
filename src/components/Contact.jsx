@@ -1,8 +1,8 @@
 import userProfilePic from "../assets/user.png";
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
-import IconEdit from "./IconEdit.jsx";
-import IconDelete from "./IconDelete.jsx";
+import IconEdit from "./Icons/IconEdit.jsx";
+import IconDelete from "./Icons/IconDelete.jsx";
 
 function Contact({ contact }) {
   const {
