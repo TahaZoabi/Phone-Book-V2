@@ -1,5 +1,4 @@
 import Header from "./components/Header.jsx";
-import RotateButton from "./components/RotateButton.jsx";
 import DeleteAllButton from "./components/DeleteAllButton.jsx";
 import ModalForm from "./components/ModalForm.jsx";
 import Confirm from "./components/Confirm.jsx";
@@ -14,7 +13,6 @@ function App() {
         <section className="container">
           <Header />
           <Hero />
-          <RotateButton />
           <DeleteAllButton />
           <ModalForm />
           <Confirm />
