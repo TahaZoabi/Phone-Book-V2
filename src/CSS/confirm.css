@@ -104,7 +104,7 @@ body {
     transition: all 0.15s ease;
 }
 
-/* Confirm button styles */
+/* ConfirmModal button styles */
 .confirm-btn {
     background-color: #ef4444;
     color: rgba(255, 255, 255, 1);

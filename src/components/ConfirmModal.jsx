@@ -1,9 +1,9 @@
 import "../CSS/confirm.css";
 import { useContext } from "react";
-import { GlobalContext } from "../GlobalContext.jsx";
+import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
 import useDeleteContact from "../utilis/hooks/useDeleteContact.jsx";
 
-function Confirm() {
+function ConfirmModal() {
   const [deleteContact] = useDeleteContact();
   const { isConfirmOpen, setIsConfirmOpen, deleteState } =
     useContext(GlobalContext);
@@ -45,7 +45,7 @@ function Confirm() {
             id="confirm-confirmBtn"
             type="button"
             className="confirm-btn"
-            aria-label="Confirm"
+            aria-label="ConfirmModal"
           >
             Confirm
           </button>
@@ -55,4 +55,4 @@ function Confirm() {
   );
 }
 
-export default Confirm;
+export default ConfirmModal;

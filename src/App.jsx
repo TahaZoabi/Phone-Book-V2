@@ -1,8 +1,7 @@
-import Header from "./components/Header.jsx";
 import ModalForm from "./components/ModalForm.jsx";
-import Confirm from "./components/Confirm.jsx";
+import ConfirmModal from "./components/ConfirmModal.jsx";
 import Footer from "./components/Footer.jsx";
-import { GlobalProvider } from "./GlobalContext.jsx";
+import { GlobalProvider } from "./utilis/Contexts/GlobalContext.jsx";
 import Hero from "./components/Hero.jsx";
 
 function App() {
@@ -10,10 +9,9 @@ function App() {
     <GlobalProvider>
       <main>
         <section className="container">
-          <Header />
           <Hero />
           <ModalForm />
-          <Confirm />
+          <ConfirmModal />
           <Footer />
         </section>
       </main>

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GlobalContext } from "../../GlobalContext.jsx";
+import { GlobalContext } from "../Contexts/GlobalContext.jsx";
 
 function useDeleteContact() {
   const { setIsConfirmOpen, setContactsList, deleteState, setDeleteState } =

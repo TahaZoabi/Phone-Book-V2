@@ -1,6 +1,6 @@
 import "../CSS/modal.css";
 import { useContext, useState } from "react";
-import { GlobalContext } from "../GlobalContext.jsx";
+import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
 
 function ModalForm() {
   const [errors, setErrors] = useState({});
