@@ -6,11 +6,12 @@ import logo from "../assets/call.png";
 import IconSearch from "./Icons/IconSearch.jsx";
 import IconRemove from "./Icons/IconRemove.jsx";
 import IconPlus from "./Icons/IconPlus.jsx";
+import { useDeleteContact } from "../utilis/hooks/useDeleteContact.js";
 
 function Hero() {
   const { contactsList, setIsFormOpen, setFormData } =
     useContext(GlobalContext);
-
+  const { setIsConfirmOpen, setDeleteState } = useDeleteContact();
   function handleClick() {
     setIsFormOpen(true);
     setFormData({ name: "", phoneNumber: "", address: "", email: "" });
@@ -36,9 +37,8 @@ function Hero() {
       )
     : sortedContacts;
 
-  const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
   function handleDeleteAll() {
-    setIsConfirmOpen(true);
+    setIsConfirmOpen((prevState) => !prevState);
     setDeleteState({
       type: "all",
     });
@@ -85,7 +85,7 @@ function Hero() {
       ) : (
         <div className="phone-contact-list">
           {filteredContacts.map((contact) => (
-            <Contact key={contact.name} contact={contact} />
+            <Contact key={contact.id} contact={contact} />
           ))}
         </div>
       )}

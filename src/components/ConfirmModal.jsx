@@ -1,17 +1,29 @@
 import "../CSS/confirm.css";
-import { useContext } from "react";
-import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
-import useDeleteContact from "../utilis/hooks/useDeleteContact.jsx";
+import { useDeleteContact } from "../utilis/hooks/useDeleteContact.js";
 
 function ConfirmModal() {
-  const [deleteContact] = useDeleteContact();
-  const { isConfirmOpen, setIsConfirmOpen, deleteState } =
-    useContext(GlobalContext);
+  const {
+    deleteState,
+    setDeleteState,
+    deleteContact,
+    isConfirmOpen,
+    setIsConfirmOpen,
+  } = useDeleteContact();
+
   function handleCancelClick() {
-    setIsConfirmOpen(false);
+    setIsConfirmOpen((prevState) => !prevState);
+    setDeleteState({
+      type: "",
+      id: -1,
+      name: "",
+    });
+    console.log("state was canceled");
+    console.log(deleteState);
   }
   function handleConfirmClick() {
     deleteContact();
+    console.log("should be deleted");
+    console.log(deleteState);
   }
 
   return (

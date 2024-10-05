@@ -1,26 +1,33 @@
 import userProfilePic from "../assets/user.png";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
 import IconEdit from "./Icons/IconEdit.jsx";
 import IconDelete from "./Icons/IconDelete.jsx";
+import { useDeleteContact } from "../utilis/hooks/useDeleteContact.js";
 
 function Contact({ contact }) {
-  const {
-    setIsConfirmOpen,
-    setDeleteState,
-    setIsFormOpen,
-    setFormData,
-    setIsEditing,
-  } = useContext(GlobalContext);
+  const { setIsFormOpen, setFormData, setIsEditing } =
+    useContext(GlobalContext);
+
+  const { deleteState, setDeleteState, setIsConfirmOpen, isConfirmOpen } =
+    useDeleteContact();
 
   function handleDeleteClick() {
-    setIsConfirmOpen(true);
+    setIsConfirmOpen((prevState) => !prevState);
+    console.log(deleteState);
     setDeleteState({
       type: "individual",
       id: contact.id,
       name: contact.name,
     });
   }
+
+  useEffect(() => {
+    if (deleteState.type) {
+      console.log(isConfirmOpen);
+      console.log("Delete state updated: ", { deleteState });
+    }
+  }, [deleteState, setIsConfirmOpen]);
 
   function handleEditClick() {
     setIsEditing({ mode: true, id: contact.id });

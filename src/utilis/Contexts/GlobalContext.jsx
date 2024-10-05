@@ -39,12 +39,10 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
   const [contactsList, setContactsList] = useState(initialState);
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isEditing, setIsEditing] = useState({
     mode: false,
     id: null,
   });
-  const [deleteState, setDeleteState] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     phoneNumber: "",
@@ -61,10 +59,6 @@ export const GlobalProvider = ({ children }) => {
         formData,
         contactsList,
         setContactsList,
-        isConfirmOpen,
-        setIsConfirmOpen,
-        deleteState,
-        setDeleteState,
         isEditing,
         setIsEditing,
         setFormData,
