@@ -1,33 +1,17 @@
 import "../CSS/confirm.css";
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext.jsx";
+import useDeleteContact from "../utilis/hooks/useDeleteContact.jsx";
 
 function Confirm() {
-  const {
-    isConfirmOpen,
-    setIsConfirmOpen,
-    setContactsList,
-    deleteState,
-    setDeleteState,
-  } = useContext(GlobalContext);
+  const [deleteContact] = useDeleteContact();
+  const { isConfirmOpen, setIsConfirmOpen, deleteState } =
+    useContext(GlobalContext);
   function handleCancelClick() {
     setIsConfirmOpen(false);
   }
   function handleConfirmClick() {
-    if (deleteState.type === "individual") {
-      setContactsList((contactList) =>
-        contactList.filter((contact) => contact.id !== deleteState.id),
-      );
-      resetActions();
-    } else if (deleteState.type === "all") {
-      setContactsList([]);
-      resetActions();
-    }
-  }
-
-  function resetActions() {
-    setIsConfirmOpen(false);
-    setDeleteState("");
+    deleteContact();
   }
 
   return (
