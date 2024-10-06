@@ -1,6 +1,4 @@
-import IconGitHub from "./Icons/IconGitHub.jsx";
-import IconGmail from "./Icons/IconGmail.jsx";
-import IconTwitter from "./Icons/IconTwitter.jsx";
+import { IconTwitter, IconGitHub, IconGmail } from "./Icons/Icons.jsx";
 
 function Footer() {
   return (

@@ -3,9 +3,8 @@ import Button from "./Button.jsx";
 import { GlobalContext } from "../Contexts/GlobalContext.jsx";
 import Contact from "./Contact.jsx";
 import logo from "../assets/call.png";
-import IconSearch from "./Icons/IconSearch.jsx";
-import IconRemove from "./Icons/IconRemove.jsx";
-import IconPlus from "./Icons/IconPlus.jsx";
+import { IconSearch, IconRemove, IconPlus } from "./Icons/Icons.jsx";
+
 import { initialDataValue } from "../constants/index.js";
 
 function Hero() {
