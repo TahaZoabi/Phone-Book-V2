@@ -1,6 +1,6 @@
 import userProfilePic from "../assets/user.png";
 import { useContext } from "react";
-import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
+import { GlobalContext } from "../Contexts/GlobalContext.jsx";
 import IconEdit from "./Icons/IconEdit.jsx";
 import IconDelete from "./Icons/IconDelete.jsx";
 

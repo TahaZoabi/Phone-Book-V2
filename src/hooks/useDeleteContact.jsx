@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../Contexts/GlobalContext.jsx";
+import { initialDeleteValue } from "../constants/index.js";
 
 function useDeleteContact() {
   const { setIsConfirmOpen, setContactsList, deleteState, setDeleteState } =
@@ -18,7 +19,7 @@ function useDeleteContact() {
 
   function resetActions() {
     setIsConfirmOpen(false);
-    setDeleteState("");
+    setDeleteState(initialDeleteValue);
   }
 
   return [deleteContact];

@@ -1,7 +1,7 @@
 import "../CSS/confirm.css";
 import { useContext } from "react";
-import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
-import useDeleteContact from "../utilis/hooks/useDeleteContact.jsx";
+import { GlobalContext } from "../Contexts/GlobalContext.jsx";
+import useDeleteContact from "../hooks/useDeleteContact.jsx";
 
 function ConfirmModal() {
   const [deleteContact] = useDeleteContact();

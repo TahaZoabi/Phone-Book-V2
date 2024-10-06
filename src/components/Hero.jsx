@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
 import Button from "./Button.jsx";
-import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
+import { GlobalContext } from "../Contexts/GlobalContext.jsx";
 import Contact from "./Contact.jsx";
 import logo from "../assets/call.png";
 import IconSearch from "./Icons/IconSearch.jsx";
 import IconRemove from "./Icons/IconRemove.jsx";
 import IconPlus from "./Icons/IconPlus.jsx";
+import { initialDataValue } from "../constants/index.js";
 
 function Hero() {
   const { contactsList, setIsFormOpen, setFormData } =
@@ -13,7 +14,7 @@ function Hero() {
 
   function handleClick() {
     setIsFormOpen(true);
-    setFormData({ name: "", phoneNumber: "", address: "", email: "" });
+    setFormData(initialDataValue);
   }
 
   const handleReset = () => {

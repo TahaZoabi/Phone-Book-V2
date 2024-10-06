@@ -1,6 +1,7 @@
 import "../CSS/modal.css";
 import { useContext, useState } from "react";
-import { GlobalContext } from "../utilis/Contexts/GlobalContext.jsx";
+import { GlobalContext } from "../Contexts/GlobalContext.jsx";
+import { initialDataValue, initialEditingValue } from "../constants/index.js";
 
 function ModalForm() {
   const [errors, setErrors] = useState({});
@@ -18,7 +19,7 @@ function ModalForm() {
   function handleCancelButton() {
     setIsFormOpen(false);
     setIsEditing({ mode: false, index: null }); // Reset editing state
-    setFormData({ name: "", phoneNumber: "", address: "", email: "" }); // Reset form data
+    setFormData(initialDataValue); // Reset form data
     setErrors({}); // Reset errors
   }
 
@@ -54,7 +55,7 @@ function ModalForm() {
       return updatedList; // Return the updated list
     });
 
-    setIsEditing({ mode: false, id: null });
+    setIsEditing(initialEditingValue);
     setIsFormOpen(false);
   }
 
