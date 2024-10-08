@@ -8,8 +8,13 @@ import { IconSearch, IconRemove, IconPlus } from "./Icons/Icons.jsx";
 import { initialDataValue } from "../constants/index.js";
 
 function Hero() {
-  const { contactsList, setIsFormOpen, setFormData } =
-    useContext(GlobalContext);
+  const {
+    contactsList,
+    setIsFormOpen,
+    setFormData,
+    setIsConfirmOpen,
+    setDeleteState,
+  } = useContext(GlobalContext);
 
   function handleClick() {
     setIsFormOpen(true);
@@ -36,7 +41,6 @@ function Hero() {
       )
     : sortedContacts;
 
-  const { setIsConfirmOpen, setDeleteState } = useContext(GlobalContext);
   function handleDeleteAll() {
     setIsConfirmOpen(true);
     setDeleteState({

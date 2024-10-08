@@ -21,7 +21,6 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
-        initialState,
         isFormOpen,
         setIsFormOpen,
         formData,
