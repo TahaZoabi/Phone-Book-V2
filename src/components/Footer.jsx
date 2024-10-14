@@ -11,7 +11,7 @@ function Footer() {
         <a href="mailto:zoabi03@gmail.com" aria-label="Gmail">
           <IconGmail />
         </a>
-        <a href="https://x.com/dev_range" target="_blank">
+        <a href="https://x.com/RealRangeDev" target="_blank">
           <IconTwitter />
         </a>
       </div>
