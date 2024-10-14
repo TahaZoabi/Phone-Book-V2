@@ -1,88 +1,50 @@
 import "../CSS/modal.css";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GlobalContext } from "../Contexts/GlobalContext.jsx";
-import { initialDataValue, initialEditingValue } from "../constants/index.js";
-
+import { useForm } from "react-hook-form";
+import { initialEditingValue } from "../constants/index.js";
 function ModalForm() {
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
   const {
     isFormOpen,
     setIsFormOpen,
-    formData,
     setContactsList,
     isEditing,
     setIsEditing,
-    setFormData,
     contactsList,
+    setFormData,
+    formData,
   } = useContext(GlobalContext);
-
+  function onSubmit(data) {
+    const { id } = isEditing;
+    if (id) {
+      setContactsList((prevContactsList) => {
+        const updatedList = [...prevContactsList];
+        const index = updatedList.findIndex((c) => c.id === id);
+        if (index !== -1) {
+          updatedList[index] = { ...formData, id };
+        }
+        formData.id = id;
+        setIsEditing(initialEditingValue);
+        return updatedList;
+      });
+    } else {
+      data.id = contactsList.length + 1;
+      setContactsList((prevContactsList) => [...prevContactsList, formData]);
+      reset();
+    }
+    setIsFormOpen(false);
+  }
   function handleCancelButton() {
     setIsFormOpen(false);
-    setIsEditing({ mode: false, index: null }); // Reset editing state
-    setFormData(initialDataValue); // Reset form data
-    setErrors({}); // Reset errors
-  }
-
-  function handleDataChange(e) {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" })); // Clear specific error on input
-  }
-
-  function handleConfirmButton() {
-    formData.id = contactsList.length + 1;
-    if (!validateInputs()) return; // Validate before proceeding
-    setContactsList((prevContactsList) => [...prevContactsList, formData]);
-    handleCancelButton(); // Close the form after adding
-  }
-
-  function handleSaveButton() {
-    if (!validateInputs()) return; // Validate before proceeding
-
-    const { id } = isEditing;
-
-    setContactsList((prevContactsList) => {
-      const updatedList = [...prevContactsList];
-      const index = updatedList.findIndex((c) => c.id === id); // Find the index directly
-
-      if (index !== -1) {
-        updatedList[index] = { ...formData, id };
-      }
-      formData.id = id;
-      return updatedList; // Return the updated list
-    });
-
     setIsEditing(initialEditingValue);
-    setIsFormOpen(false);
+    reset();
   }
-
-  function validateInputs() {
-    const newErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Contact name is required";
-    } else if (formData.name.trim().length < 3) {
-      newErrors.name = "Contact name must be 3 letters at least";
-    }
-    if (!formData.phoneNumber) {
-      newErrors.phoneNumber = "Contact phone number is required";
-    } else if (!/^\d+$/.test(formData.phoneNumber)) {
-      newErrors.phoneNumber = "Phone number should only contain digits";
-    } else if (formData.phoneNumber.length !== 10) {
-      newErrors.phoneNumber = "Phone number must be 10 digits";
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    setErrors(newErrors); // Update errors state
-    return Object.keys(newErrors).length === 0; // Return true if no errors
-  }
-
   return (
     <section
       className={`contact-modal ${isFormOpen ? "display-flex" : "display-none"}`}
@@ -90,36 +52,90 @@ function ModalForm() {
       <div id="form-container">
         <div className="header">
           <p className="alert">
-            {isEditing.mode ? "Edit Contact" : "New Contact"}
+            {isEditing.mode ? "Edit Contact" : "New Contact"}{" "}
           </p>
         </div>
-        <form id="contactForm">
-          {["name", "phoneNumber", "email", "address"].map((field) => (
-            <div className="form-property" key={field}>
-              <label className="label-type" htmlFor={field}>
-                {field.charAt(0).toUpperCase() + field.slice(1)}
-              </label>
-              {errors[field] && <div className="error">{errors[field]}</div>}
-              {/* Conditionally render error */}
-              <input
-                value={formData[field]}
-                onChange={handleDataChange}
-                type={field === "phoneNumber" ? "tel" : "text"}
-                id={field}
-                name={field}
-                className="new-contact-input"
-                placeholder={
-                  field === "name"
-                    ? "John Smith"
-                    : field === "phoneNumber"
-                      ? "0549876543"
-                      : field === "email"
-                        ? "john.smith@example.com"
-                        : "123 Main Street, Anytown, USA"
-                }
-              />
-            </div>
-          ))}
+        <form id="contactForm" onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-property">
+            <label className="label-type" htmlFor="name">
+              Name
+            </label>
+            <input
+              {...register("name", {
+                required: "Name is required",
+                minLength: {
+                  value: 3,
+                  message: "Name should be 3 characters at least",
+                },
+              })}
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              className="new-contact-input"
+              placeholder={"John Smith"}
+            />
+            {errors.name && (
+              <div className={"error"}>{`${errors.name.message}`}</div>
+            )}
+            <label className="label-type" htmlFor="phoneNumber">
+              Phone Number
+            </label>
+            <input
+              {...register("phoneNumber", {
+                required: "Number is required",
+                minLength: { value: 10, message: "Number should be 10 digits" },
+                pattern: {
+                  value: /^\d+$/,
+                  message: "Number should contain only digits",
+                },
+              })}
+              value={formData.phoneNumber}
+              onChange={(e) =>
+                setFormData({ ...formData, phoneNumber: e.target.value })
+              }
+              className="new-contact-input"
+              placeholder={"0549876543"}
+            />
+            {errors.phoneNumber && (
+              <div className={"error"}>{`${errors.phoneNumber.message}`}</div>
+            )}
+            <label className="label-type" htmlFor="email">
+              Email
+            </label>
+            <input
+              {...register("email", {
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Please enter a valid email address",
+                },
+              })}
+              value={formData.email}
+              className="new-contact-input"
+              placeholder={"john.smith@example.com"}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+            {errors.email && (
+              <div className={"error"}>{`${errors.email.message}`}</div>
+            )}
+            <label className="label-type" htmlFor="address">
+              Address
+            </label>
+            <input
+              {...register("address", {})}
+              className="new-contact-input"
+              placeholder={"123 Main Street, AnyTown, USA"}
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+            />
+            {errors.address && (
+              <div className={"error"}>{`${errors.address.message}`}</div>
+            )}
+          </div>
           <div className="actions">
             <button
               type="button"
@@ -128,12 +144,8 @@ function ModalForm() {
             >
               Cancel
             </button>
-            <button
-              type="button"
-              className="read confirmBtn"
-              onClick={isEditing.mode ? handleSaveButton : handleConfirmButton}
-            >
-              {isEditing.mode ? "Save" : "Confirm"}
+            <button type="submit" className="read confirmBtn">
+              {isEditing.mode ? "Save" : "Confirm"}{" "}
             </button>
           </div>
         </form>
@@ -141,5 +153,4 @@ function ModalForm() {
     </section>
   );
 }
-
 export default ModalForm;
